@@ -1,0 +1,108 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+@{
+    int i = 1;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Fashion | Teamplate</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="Content/img/favicon.ico">
+
+    <link rel="stylesheet" href="Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="Content/css/style.css">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css'>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css'>
+
+    <script src="tinymce/tinymce.min.js"></script>
+    <script src="Content/js/tinyMCE.js"></script>
+</head>
+<body class="full-wrapper">
+
+    @Html.Partial("/Views/_header.cshtml")
+    <main>
+        <h1 style="text-align: center;color: purple;margin-top: 40px">Manage Blog</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-6">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Blog Name</th>
+                                <th scope="col">Blog Description</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Function</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.logList)
+                            {
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    @{
+                                        i++;
+                                    }
+                                    <td>@item.BlogName</td>
+                                    <td>@item.BlogDescription</td>
+                                    <td>@ViewBag.logDAO.getBlogStatusNameByStatusID(@item.StatusId)</td>
+                                    <td><a href="ViewUpdateBlog?id=@item.BlogId" class="btn" style="padding: 20px;">View Detail</a></td>
+                                    <td><a href="ManagerAllBlog/Delete?id=@item.BlogId" class="btn btnView" style="padding: 20px;" id="@item.BlogId">Delete</a></td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Confirm Delete -->
+    <div class="modal" id="confirmModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-top:120px">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm</h5>
+                    <button type="button" style="border: none; background-color: #fff" id="close" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Do you confirm to delete this blog?
+                </div>
+                <div class="modal-footer">
+                    <a id="herfDelete" class="btn btnaccept">Confirm</a>
+                    <button id="CancelBtn" type="button" class="btn btnreject" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $(document).on('click', '.btnView', function (e) {
+                e.preventDefault(); // Ngăn chặn việc gửi biểu mẫu mặc định
+                var hrefValue = $(this).attr('href');
+                $('#herfDelete').attr('href', hrefValue);
+                $('#confirmModal').modal('show');
+            });
+
+            // If the user cancels or closes the modal
+            $('#CancelBtn, #close').click(function () {
+                $('#confirmModal').modal('hide');
+            });
+        });
+
+    </script>
+</body>
+</html>

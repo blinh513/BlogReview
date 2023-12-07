@@ -1,0 +1,160 @@
+﻿@inject IHttpContextAccessor Accessor
+<header>
+<div class="header-area ">
+    <div class="main-header header-sticky">
+        <div class="container-fluid">
+            <div class="menu-wrapper d-flex align-items-center justify-content-between">
+                <div class="header-left d-flex align-items-center">
+
+                    <div class="logo">
+                        <a href="/Home"><img src="Content/img/logo/logo.png" alt=""></a>
+                    </div>
+
+                    <div class="main-menu  d-none d-lg-block">
+                        <nav>
+                            <ul id="navigation">
+                                <li><a href="/Home">Home</a></li>
+                                <li>
+                                    <a href="#">Location</a>
+                                            <ul class="submenu">
+                                                    @foreach (var item in ViewBag.local)
+                                                {
+                                                <li><a href="/ViewLoca?id=@item.LocaId">@item.LocaContent</a></li>
+                                                }
+                                                
+                                            </ul>                                      
+                                </li>
+                                    <li>
+                                        <a href="#">Category</a>
+                                        <ul class="submenu">
+                                            @foreach (var item in ViewBag.cont)
+                                            {
+                                                <li><a href="/ViewCate?id=@item.MainConId">@item.MainContent</a></li>
+                                            }
+
+                                        </ul>
+                                    </li>
+                                    @if (Accessor.HttpContext.Session.GetString("NameDisplay") != null)
+                                    {
+                                      var role = ViewBag.userDAO.getRoleNameByRoleID(ViewBag.userDAO.getUserByUsername(@Accessor.HttpContext.Session.GetString("Username")).RoleId);
+
+
+                                    @if ( role.Equals("ADMIN"))
+                                    {
+                                        <li>
+                                            <a href="#">Manager</a>
+                                        <ul class="submenu">
+                                                <li><a href="/ItemManage">Item Manage</a></li>
+                                                <li><a href="/BlogPending">Blog Pending</a></li>
+                                                <li><a href="/BlogAccept">Blog Accept</a></li>
+                                        </ul>
+                                        </li>
+                                    }
+                                    @if ( !role.Equals("ADMIN"))
+                                    {
+                                        <li>
+                                            <a href="ManagerAllBlog">Manager Blog</a>
+                                        </li>
+                                    }
+                                        
+                                    }
+                                    
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                    <div class="header-right1 d-flex align-items-center">
+                        
+                        @if (Accessor.HttpContext.Session.GetString("NameDisplay") != null)
+                        {
+                            <div class="main-menu  d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li>
+                                            
+                                            @{
+                                                var numberIsread = ViewBag.userDAO.getNumberNotiNotReadByUser(ViewBag.userDAO.getUserByUsername(@Accessor.HttpContext.Session.GetString("Username")).UserId);
+                                                @if (numberIsread > 0)
+                                                {
+                                                    <a href="/Notification">Notification<label style="color: red">(@numberIsread)</label></a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="/Notification">Notification</a>
+                                                }
+                                            }
+                                        </li>
+                                        <li>
+                                            <a href="#">Welcome, @Accessor.HttpContext.Session.GetString("NameDisplay")</a>
+                                        <ul class="submenu">
+                                                @{
+                                                    var role = ViewBag.userDAO.getRoleNameByRoleID(ViewBag.userDAO.getUserByUsername(@Accessor.HttpContext.Session.GetString("Username")).RoleId);
+                                                    var userID = ViewBag.userDAO.getUserByUsername(@Accessor.HttpContext.Session.GetString("Username")).UserId;
+                                                }
+                                                @if (role.Equals("Viewer"))
+                                                {
+                                                    if (ViewBag.userDAO.countBlogInNow(userID) == 1)
+                                                    {
+                                                        <li><a href="#" id="myLink" class="reg">Register to Blogger</a></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li><a href="BlogRegister">Register to Blogger</a></li>
+                                                    }
+                                                }
+                                                @if (role.Equals("Blogger"))
+                                                {
+                                                    if (ViewBag.userDAO.countBlogInNow(userID) == 5)
+                                                    {
+                                                        <li><a href="#" id="myCreate" class="cre">Create Blog</a></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li><a href="BlogRegister">Create Blog</a></li>
+                                                    }
+                                                }
+                                                @if (role.Equals("ADMIN"))
+                                                {
+                                                    <li><a href="BlogRegister">Create Blog</a></li>
+                                                }
+                                                <li><a href="/Home/Logout">Logout</a></li>
+                                        </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="main-menu  d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a href="/Login">Login</a></li>
+                                        <li><a href="/Register"> Register </a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        }
+                    </div>
+
+                <div class="col-12">
+                    <div class="mobile_menu d-block d-lg-none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</header>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $(document).on('click', '.cre', function (e) {
+            alert("You created 5 blogs today. Create a blog tomorrow please!");
+        });
+
+        $(document).on('click', '.reg', function (e) {
+            alert("You have signed up for blogger today. Please register tomorrow!");
+        });
+    });
+</script>

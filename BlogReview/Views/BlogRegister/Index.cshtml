@@ -1,0 +1,140 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Fashion | Teamplate</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="Content/img/favicon.ico">
+
+    <link rel="stylesheet" href="Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="Content/css/style.css">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css'>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css'>
+
+    <script src="tinymce/tinymce.min.js"></script>
+    <script src="Content/js/tinyMCE.js"></script>
+</head>
+<body class="full-wrapper">
+
+    @Html.Partial("/Views/_header.cshtml")
+    <main>
+        <h1 style="text-align: center;color: purple;margin-top: 40px">Create Blog</h1>
+        @if (ViewBag.role == "Viewer")
+        {
+            <label style="color: red;margin-top: 20px">(*)To become a blogger, you will post an article for us to review. If the article meets the requirements, you can become blogger.</label>
+        }
+        <div class="container">
+        <div class="row">
+                <div class="col"></div>
+                <div class="col-6">
+                <form asp-controller="BlogRegister" asp-action="Index" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Blog Title</label>
+                        <input type="text" class="form-control" name="blogname" value="@ViewBag.enterBlogTitle" required>
+                    </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Blog Description</label>
+                            <textarea class="form-control" name="description" required>@ViewBag.enterBlogDes</textarea>
+                        </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Image Blog</label>
+                        <input type="file" class="form-control" name="image" required>
+                    </div>
+                    @if (ViewBag.imageErr != null)
+                    {
+                        <span style="color: red">@ViewBag.imageErr</span>
+
+                        <br>
+                    }
+                        <div class="form-group">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label for="exampleInputPassword1">Location</label><br>
+                                        @foreach (var item in ViewBag.local)
+                                        {
+                                            @if (ViewBag.locaCheck != null && ViewBag.locaCheck.Contains(item.LocaContent))
+                                            {
+                                                <input type="checkbox" name="@item.LocaContent" value="@item.LocaContent" checked>
+
+                                                @item.LocaContent
+
+                                                <br>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" name="@item.LocaContent" value="@item.LocaContent">
+
+                                                @item.LocaContent
+
+                                                <br>
+                                            }
+                                        }
+                                        <input type="text" name="otherLocation" placeholder="Other..." class="form-control" value="@ViewBag.otherLocation" />
+                                        @if (ViewBag.locaErr != null)
+                                        {
+                                            <span style="color: red">@ViewBag.locaErr</span>
+
+                                            <br>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr style="padding-top:50px">
+                                    <td>
+                                        <label for="exampleInputPassword1">Category</label><br>
+                                        @foreach (var item in ViewBag.cont)
+                                        {
+                                            @if (ViewBag.cateCheck != null && ViewBag.cateCheck.Contains(item.MainContent))
+                                                {
+                                                    <input type="checkbox" name="@item.MainContent" value="@item.MainContent" checked>
+
+                                                    @item.MainContent
+
+                                                <br>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" name="@item.MainContent" value="@item.MainContent">
+
+                                                @item.MainContent
+
+                                                <br>
+                                            }
+                                        }
+                                        <input type="text" name="otherCategory" placeholder="Other..." class="form-control" value="@ViewBag.otherCategory" />
+                                        @if (ViewBag.cateErr != null)
+                                        {
+                                            <span style="color: red">@ViewBag.cateErr</span>
+
+                                            <br>
+                                        }
+                                    </td>
+                                </tr>
+                            </table>
+                                
+                            </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Blog Content</label>
+                            <textarea name="blogContent" id="tinymce" class="form-control">@ViewBag.blogContent</textarea>
+                        </div>
+                        @if (ViewBag.blogContentErr != null)
+                        {
+                            <span style="color: red">@ViewBag.blogContentErr</span>
+
+                            <br>
+                        }
+                    
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </main>
+
+</body>
+</html>

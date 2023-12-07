@@ -1,0 +1,212 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Fashion | Teamplate</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="Content/img/favicon.ico">
+
+    <link rel="stylesheet" href="Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="Content/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="Content/css/slicknav.css">
+    <link rel="stylesheet" href="Content/css/flaticon.css">
+    <link rel="stylesheet" href="Content/css/progressbar_barfiller.css">
+    <link rel="stylesheet" href="Content/css/gijgo.css">
+    <link rel="stylesheet" href="Content/css/animate.min.css">
+    <link rel="stylesheet" href="Content/css/animated-headline.css">
+    <link rel="stylesheet" href="Content/css/magnific-popup.css">
+    <link rel="stylesheet" href="Content/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="Content/css/themify-icons.css">
+    <link rel="stylesheet" href="Content/css/slick.css">
+    <link rel="stylesheet" href="Content/css/nice-select.css">
+    <link rel="stylesheet" href="Content/css/style.css">
+</head>
+<body class="full-wrapper">
+
+    @Html.Partial("/Views/_header.cshtml")
+
+    <main>
+
+        <section class="blog_area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mb-5 mb-lg-0">
+                        <div class="blog_left_sidebar">
+
+                            @foreach (var item in ViewBag.listBlogCate)
+                            {
+                                <article class="blog_item">
+                                    <div class="blog_item_img">
+                                        <img class="card-img rounded-0" src="~/blog/blogimg/@item.ImageBlog" alt="">
+                                    </div>
+                                    <div class="blog_details">
+                                        <a class="d-inline-block" href="/BlogDetailCus?id=@item.BlogId">
+                                            <h2 class="blog-head" style="color: #2d2d2d;">@item.BlogName</h2>
+                                        </a>
+                                        <p>
+                                            @item.BlogDescription
+                                        </p>
+                                        <ul class="blog-info-link">
+                                            <li><a href="#"><i class="fa fa-user"></i> @ViewBag.userDAO.getUserByBlogID(item.BlogId).NameDisplay</a></li>
+                                            <li>
+                                                Location:
+                                                @{
+                                                    var locaList = ViewBag.locationDAO.getLocaBlogByBlogID(item.BlogId);
+                                                    int start = 0; // Đặt giá trị bắt đầu
+                                                    int stop = locaList.Count; // Đặt giá trị kết thúc
+                                                    var locaEnd = locaList[stop - 1];
+                                                }
+                                                @for (int i = start; i < stop - 1; i++)
+                                                {
+                                                    var loca = locaList[i];
+                                                    <a href="/ViewLoca?id=@loca.LocaId">@ViewBag.locationDAO.getLocaNameByLocaID(loca.LocaId),</a>
+                                                }
+                                                <a href="/ViewLoca?id=@locaEnd.LocaId">@ViewBag.locationDAO.getLocaNameByLocaID(locaEnd.LocaId)</a>
+                                            </li>
+
+                                            <li>
+                                                Category:
+                                                @{
+                                                    var cateList = ViewBag.mainContent.getMainConBlogByBlogID(item.BlogId);
+                                                    int startCate = 0; // Đặt giá trị bắt đầu
+                                                    int stopCate = cateList.Count; // Đặt giá trị kết thúc
+                                                    var cateEnd = cateList[stopCate - 1];
+                                                }
+                                                @for (int i = startCate; i < stopCate - 1; i++)
+                                                {
+                                                    var loca = cateList[i];
+                                                    <a href="/ViewCate?id=@loca.MainConId">@ViewBag.mainContent.getMainConNameByMainConID(loca.MainConId),</a>
+                                                }
+                                                <a href="/ViewCate?id=@cateEnd.MainConId">@ViewBag.mainContent.getMainConNameByMainConID(cateEnd.MainConId)</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </article>
+                            }
+
+
+                            <nav class="blog-pagination justify-content-center d-flex">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a href="#" class="page-link" aria-label="Previous">
+                                            <i class="ti-angle-left"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">1</a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a href="#" class="page-link">2</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link" aria-label="Next">
+                                            <i class="ti-angle-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="blog_right_sidebar">
+                            <aside class="single_sidebar_widget search_widget">
+                                <form asp-controller="SearchBlog" asp-action="Index" method="post">
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <input name="search" value="@ViewBag.search" type="text" class="form-control" placeholder='Search Keyword' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
+                                            <div class="input-group-append">
+                                                <button class="btns" type="button"><i class="ti-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Search</button>
+                                </form>
+                            </aside>
+                            <aside class="single_sidebar_widget post_category_widget">
+                                <h4 class="widget_title" style="color: #2d2d2d;">Tag</h4>
+                                <ul class="list cat-list">
+                                    <li>
+                                        @foreach (var item in ViewBag.local)
+                                        {
+                                            <a href="/ViewLoca?id=@item.LocaId" class="d-flex"><p>@item.LocaContent</p><p>(@ViewBag.locationDAO.countLocainProject(item.LocaId))</p></a>
+                                        }
+                                        @foreach (var item in ViewBag.cont)
+                                        {
+                                            <a href="/ViewCate?id=@item.MainConId" class="d-flex"><p>@item.MainContent</p><p>(@ViewBag.mainContent.countMainConinProject(item.MainConId))</p></a>
+                                        }
+                                    </li>
+
+                                </ul>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="search-model-box">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-btn">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Searching key.....">
+            </form>
+        </div>
+    </div>
+
+
+    <div id="back-top">
+        <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+    </div>
+
+
+    <script src="./Content/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="./Content/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./Content/js/popper.min.js"></script>
+    <script src="./Content/js/bootstrap.min.js"></script>
+
+    <script src="./Content/js/owl.carousel.min.js"></script>
+    <script src="./Content/js/slick.min.js"></script>
+    <script src="./Content/js/jquery.slicknav.min.js"></script>
+
+    <script src="./Content/js/wow.min.js"></script>
+    <script src="./Content/js/animated.headline.js"></script>
+    <script src="./Content/js/jquery.magnific-popup.js"></script>
+    <script src="./Content/js/gijgo.min.js"></script>
+
+    <script src="./Content/js/jquery.nice-select.min.js"></script>
+    <script src="./Content/js/jquery.sticky.js"></script>
+    <script src="./Content/js/jquery.barfiller.js"></script>
+
+    <script src="./Content/js/jquery.counterup.min.js"></script>
+    <script src="./Content/js/waypoints.min.js"></script>
+    <script src="./Content/js/jquery.countdown.min.js"></script>
+    <script src="./Content/js/hover-direction-snake.min.js"></script>
+
+    <script src="./Content/js/contact.js"></script>
+    <script src="./Content/js/jquery.form.js"></script>
+    <script src="./Content/js/jquery.validate.min.js"></script>
+    <script src="./Content/js/mail-script.js"></script>
+    <script src="./Content/js/jquery.ajaxchimp.min.js"></script>
+
+    <script src="./Content/js/plugins.js"></script>
+    <script src="./Content/js/main.js"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-23581568-13');
+    </script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816" integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw==" data-cf-beacon='{"rayId":"7d3da1353c8b91a1","version":"2023.4.0","b":1,"token":"cd0b4b3a733644fc843ef0b185f98241","si":100}' crossorigin="anonymous"></script>
+</body>
+</html>

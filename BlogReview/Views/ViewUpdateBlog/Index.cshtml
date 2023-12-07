@@ -1,0 +1,127 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Fashion | Teamplate</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="Content/img/favicon.ico">
+
+    <link rel="stylesheet" href="Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="Content/css/style.css">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css'>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css'>
+    <style>
+
+    </style>
+    <script src="tinymce/tinymce.min.js"></script>
+    <script src="Content/js/tinyMCE.js"></script>
+</head>
+<body>
+
+    @Html.Partial("/Views/_header.cshtml")
+    <main>
+        <h1 style="text-align: center;color: purple;margin-top: 40px">Blog Detail</h1>
+        <form asp-controller="ViewUpdateBlog" asp-action="Index" method="post" enctype="multipart/form-data">
+            <div class="container" style="margin-bottom:40px">
+                <label><strong>Blog Name:</strong> </label>
+                <input type="text" class="form-control" name="blogname" value="@ViewBag.blogDetail.BlogName" required>
+
+                <label><strong>Blog Description:</strong></label>
+                <textarea class="form-control" name="description" required>@ViewBag.blogDetail.BlogDescription</textarea>
+
+                <label><strong>Blog Image:</strong><br> <img src="~/blog/blogimg/@ViewBag.blogDetail.ImageBlog" style="max-width: 20%;height: auto" /></label><br>
+                <input type="file" class="form-control" name="image">
+                @if (ViewBag.imageErr != null)
+                {
+                    <span style="color: red">@ViewBag.imageErr</span>
+
+                    <br>
+                }
+                <input type="hidden" name="idBlog" value="@ViewBag.id" />
+                <label>
+                    <strong>Blog Location:</strong>
+                    @foreach (var item in ViewBag.local)
+                    {
+                        @if (ViewBag.locaCheck != null && ViewBag.locaCheck.Contains(item.LocaContent))
+                        {
+                            <br>
+                            <input type="checkbox" name="@item.LocaContent" value="@item.LocaContent" checked>
+
+                            @item.LocaContent
+
+
+                        }
+                        else
+                        {
+                            <br>
+                            <input type="checkbox" name="@item.LocaContent" value="@item.LocaContent">
+
+                            @item.LocaContent
+
+
+                        }
+                    }<br>
+                    <label>Location Draf:</label>
+                    <input type="text" name="otherLocation" placeholder="Other..." class="form-control" value="@ViewBag.locationDraf" />
+                    @if (ViewBag.locaErr != null)
+                    {
+                        <span style="color: red">@ViewBag.locaErr</span>
+
+                        <br>
+                    }
+                </label><br>
+                <label>
+                    <strong>Blog Category:</strong>
+                    @foreach (var item in ViewBag.cont)
+                    {
+                        @if (ViewBag.cateCheck != null && ViewBag.cateCheck.Contains(item.MainContent))
+                        {
+                            <br>
+                            <input type="checkbox" name="@item.MainContent" value="@item.MainContent" checked>
+
+                            @item.MainContent
+
+
+                        }
+                        else
+                        {
+                            <br>
+                            <input type="checkbox" name="@item.MainContent" value="@item.MainContent">
+
+                            @item.MainContent
+
+
+                        }
+                    }<br>
+                    <label>Category Draf: </label>
+                    <input type="text" name="otherCategory" placeholder="Other..." class="form-control" value="@ViewBag.categoryDraft" />
+                    @if (ViewBag.cateErr != null)
+                    {
+                        <span style="color: red">@ViewBag.cateErr</span>
+
+                        <br>
+                    }
+                </label><br>
+
+                <label><strong>Blog Content:</strong></label>
+                <textarea name="blogContent" id="tinymce" class="form-control">@ViewBag.blogDetail.Content</textarea>   
+                @if (ViewBag.username.Equals("admin"))
+                {
+                    <button value="Accept" type="submit" class="btnaccept" name="Accept">Accept</button>
+                    <button value="Reject" type="submit" class="btnreject" name="Reject">Reject</button>
+                }else{
+                    <button value="Update" type="submit" class="btnaccept" name="Update">Update</button>
+                }
+                
+            </div>
+        </form>
+    </main>
+
+</body>
+
+</html>

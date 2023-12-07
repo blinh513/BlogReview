@@ -1,0 +1,104 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+@{
+    int i = 1;
+    int ia = 1;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Fashion | Teamplate</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="Content/img/favicon.ico">
+
+    <link rel="stylesheet" href="Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="Content/css/style.css">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css'>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css'>
+
+    <script src="tinymce/tinymce.min.js"></script>
+    <script src="Content/js/tinyMCE.js"></script>
+</head>
+<body class="full-wrapper">
+
+    @Html.Partial("/Views/_header.cshtml")
+    <main>
+        <h1 style="text-align: center;color: purple;margin-top: 40px">Location or Category</h1>
+                <form asp-controller="ItemManage" asp-action="Index" method="post">
+                    <label>Add Location</label>
+                    <input type="text" class="form-control" name="location" placeholder="Enter location">
+                    <label>Add Category</label>
+                    <input type="text" class="form-control" name="category" placeholder="Enter category">
+                    <button type="submit" class="btn btn-primary" style="padding: 20px;">Submit</button>
+                </form>
+                    <br><h2 style="text-align: center;color: purple;margin-top: 40px">Manage Location</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col" colspan="2">Function</th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in ViewBag.local)
+                        {
+                        <tr>
+                            <form asp-controller="ItemManage" asp-action="UpdateLoca" method="post">
+                                <td>@i</td>
+                                @{i++;}
+                                <td>
+                                <input type="text" class="form-control" name="'loca'@item.LocaId" value="@item.LocaContent">
+                                </td>
+                                <td>
+                                    @if (ViewBag.localDel.Contains(item))
+                                    {
+                                    <a href="ItemManage/DeleteLoca?id=@item.LocaId" class="btn" style="padding: 20px;">Delete</a>
+                                    }
+                                </td>
+                                <td>
+                                <input type="submit" name="@item.LocaId" value="Update" class="btn" style="padding: 20px;">
+                                </td>
+                            </form>
+                        </tr>
+                        }
+                    </table>
+
+                    <br><h2 style="text-align: center;color: purple;margin-top: 40px">Manage Category</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col" colspan="2">Function</th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in ViewBag.cont)
+                        {
+                        <tr>
+                            <form asp-controller="ItemManage" asp-action="UpdateCate" method="post">
+                                <td>@ia</td>
+                                @{ia++;}
+                                <td>
+                        <input type="text" class="form-control" name="'cate'@item.MainConId" value="@item.MainContent">
+                                </td>
+                                <td>
+                                    @if (ViewBag.contDel.Contains(item))
+                                    {
+                                    <a href="ItemManage/DeleteCate?id=@item.MainConId" class="btn" style="padding: 20px;">Delete</a>
+                                    }
+                                </td>
+                                <td>
+                                <input type="submit" name="@item.MainConId" value="Update" class="btn" style="padding: 20px;">
+                                </td>
+                            </form>
+                        </tr>
+                        }
+                    </table>
+    </main>
+
+</body>
+</html>

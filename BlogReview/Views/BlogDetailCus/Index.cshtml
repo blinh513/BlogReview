@@ -1,0 +1,396 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Fashion | Teamplate</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="Content/img/favicon.ico">
+
+    <link rel="stylesheet" href="Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="Content/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="Content/css/slicknav.css">
+    <link rel="stylesheet" href="Content/css/flaticon.css">
+    <link rel="stylesheet" href="Content/css/progressbar_barfiller.css">
+    <link rel="stylesheet" href="Content/css/gijgo.css">
+    <link rel="stylesheet" href="Content/css/animate.min.css">
+    <link rel="stylesheet" href="Content/css/animated-headline.css">
+    <link rel="stylesheet" href="Content/css/magnific-popup.css">
+    <link rel="stylesheet" href="Content/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="Content/css/themify-icons.css">
+    <link rel="stylesheet" href="Content/css/slick.css">
+    <link rel="stylesheet" href="Content/css/nice-select.css">
+    <link rel="stylesheet" href="Content/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+
+            .rate:not(:checked) > input {
+                position: absolute;
+                top: -9999px;
+            }
+
+            .rate:not(:checked) > label {
+                float: right;
+                width: 1em;
+                overflow: hidden;
+                white-space: nowrap;
+                cursor: pointer;
+                font-size: 30px;
+                color: #ccc;
+            }
+
+                .rate:not(:checked) > label:before {
+                    content: '★ ';
+                }
+
+            .rate > input:checked ~ label {
+                color: #ffc700;
+            }
+
+            .rate:not(:checked) > label:hover,
+            .rate:not(:checked) > label:hover ~ label {
+                color: #deb217;
+            }
+
+            .rate > input:checked + label:hover,
+            .rate > input:checked + label:hover ~ label,
+            .rate > input:checked ~ label:hover,
+            .rate > input:checked ~ label:hover ~ label,
+            .rate > label:hover ~ input:checked ~ label {
+                color: #c59b08;
+            }
+    </style>
+</head>
+<body class="full-wrapper">
+
+    @Html.Partial("/Views/_header.cshtml")
+
+    <main>
+        <div class="page-notification page-notification2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+                                <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Blog Details</a></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="blog_area single-post-area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 posts-list">
+                        <div class="single-post">
+                            <div class="feature-img">
+                                <img class="img-fluid" src="~/blog/blogimg/@ViewBag.blogDetail.ImageBlog" alt="">
+                            </div>
+                            <h1 style="padding:50px 0px 20px 0px"><strong>@ViewBag.blogDetail.BlogName</strong></h1>
+                            <ul class="blog-info-link">
+                                <li><a href="#"><i class="fa fa-user"></i> @ViewBag.userDAO.getUserByBlogID(ViewBag.blogDetail.BlogId).NameDisplay</a></li>
+                                <li>
+                                    Location:
+                                    @{
+                                        var locaList = ViewBag.locationDAO.getLocaBlogByBlogID(ViewBag.blogDetail.BlogId);
+                                        int start = 0; // Đặt giá trị bắt đầu
+                                        int stop = locaList.Count; // Đặt giá trị kết thúc
+                                        var locaEnd = locaList[stop - 1];
+                                    }
+                                    @for (int i = start; i < stop - 1; i++)
+                                    {
+                                        var loca = locaList[i];
+                                        <a href="#">@ViewBag.locationDAO.getLocaNameByLocaID(loca.LocaId),</a>
+                                    }
+                                    <a href="#">@ViewBag.locationDAO.getLocaNameByLocaID(locaEnd.LocaId)</a>
+                                </li>
+
+                                <li>
+                                    Category:
+                                    @{
+                                        var cateList = ViewBag.mainContent.getMainConBlogByBlogID(ViewBag.blogDetail.BlogId);
+                                        int startCate = 0; // Đặt giá trị bắt đầu
+                                        int stopCate = cateList.Count; // Đặt giá trị kết thúc
+                                        var cateEnd = cateList[stopCate - 1];
+                                    }
+                                    @for (int i = startCate; i < stopCate - 1; i++)
+                                    {
+                                        var loca = cateList[i];
+                                        <a href="#">@ViewBag.mainContent.getMainConNameByMainConID(loca.MainConId),</a>
+                                    }
+                                    <a href="#">@ViewBag.mainContent.getMainConNameByMainConID(cateEnd.MainConId)</a>
+                                </li>
+
+                            </ul>
+                            <div class="blog_details">
+                                @Html.Raw(ViewBag.blogDetail.Content)
+                            </div>
+                        </div>
+
+                        <div class="comments-area">
+                            <h4>@ViewBag.countComment Comments</h4>
+                            <div class="comment-list">
+                                <form asp-controller="BlogDetailCus" asp-action="Index" method="post">
+                                    @foreach (var item in ViewBag.listCom)
+                                    {
+                                        <div class="single-comment justify-content-between d-flex">
+                                            <div class="user justify-content-between d-flex">
+                                                <div class="thumb">
+                                                    <img src="~/blog/userimg/@ViewBag.userDAO.getUserByID(item.UserId).ImageUser" alt="">
+                                                </div>
+                                                <div class="desc">
+                                                    <p class="comment">@item.Content</p>
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="d-flex align-items-center" style="margin-bottom:10px;">
+                                                            <h5>
+                                                                <a href="#">@ViewBag.userDAO.getUserByID(item.UserId).NameDisplay</a>
+                                                            </h5>
+                                                            <p class="date">@item.ModifiOn </p>
+                                                            @if (ViewBag.NameDisplay != null && (ViewBag.NameDisplay.Equals(ViewBag.userDAO.getUserByID(item.UserId).NameDisplay) || ViewBag.NameDisplay.Equals("ADMIN")))
+                                                            {
+                                                                <h5>
+                                                                    <button type="submit" value="@item.CommentId" name="delete" class="date btnView" id="@item.CommentId">Delete</button>
+                                                                </h5>
+
+                                                            }
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <input type="hidden" name="idBlog" value="@ViewBag.idBlog">
+                                </form>
+                                
+                                
+
+
+                            </div>
+                        </div>
+                        @if (ViewBag.login==true)
+                        {
+                            <div class="comment-form">
+                                <h4>Leave a Reply</h4>
+                                <form asp-controller="BlogDetailCus" asp-action="Index" method="post">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9" placeholder="Write Comment"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="button button-contactForm btn_1 boxed-btn">Post Comment</button>
+                                    </div>
+                                    <input type="hidden" name="idBlog" value="@ViewBag.idBlog">
+                                </form>
+                                @if (ViewBag.comtErr != null)
+                                {
+                                    <span style="color: red">@ViewBag.mes</span>
+
+                                    <br>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="comment-form">
+                                <h4>Please log in to comment on this article</h4>
+                            </div>
+                        }
+
+
+
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="blog_right_sidebar">
+                            <aside class="single_sidebar_widget search_widget">
+                                <form asp-controller="SearchBlog" asp-action="Index" method="post">
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <input name="search" value="@ViewBag.search" type="text" class="form-control" placeholder='Search Keyword' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
+                                            <div class="input-group-append">
+                                                <button class="btns" type="button"><i class="ti-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Search</button>
+                                </form>
+                            </aside>
+
+                            <aside class="single_sidebar_widget search_widget">
+                                <label>Average Rate: @ViewBag.blogDetail.AverRateFormatted</label>
+                                @if (ViewBag.login == true)
+                                {
+                                    <form asp-controller="BlogDetailCus" asp-action="Index" method="post">
+                                        <div class="rate">
+
+                                            @{
+                                                int i = ViewBag.userDAO.getStarByBlogIDandUserId(ViewBag.idUser, ViewBag.idBlog);
+                                                if (i == 0)
+                                                {
+                                                    <input type="radio" id="star5" name="rate" value="5" />
+                                                    <label for="star5" title="text">5 stars</label>
+                                                    <input type="radio" id="star4" name="rate" value="4" />
+                                                    <label for="star4" title="text">4 stars</label>
+                                                    <input type="radio" id="star3" name="rate" value="3" />
+                                                    <label for="star3" title="text">3 stars</label>
+                                                    <input type="radio" id="star2" name="rate" value="2" />
+                                                    <label for="star2" title="text">2 stars</label>
+                                                    <input type="radio" id="star1" name="rate" value="1" />
+                                                    <label for="star1" title="text">1 star</label>
+                                                }
+                                                else if (i==5)
+                                                {
+                                                    <input type="radio" id="star5" name="rate" value="5" checked/>
+                                                    <label for="star5" title="text">5 stars</label>
+                                                    <input type="radio" id="star4" name="rate" value="4" />
+                                                    <label for="star4" title="text">4 stars</label>
+                                                    <input type="radio" id="star3" name="rate" value="3" />
+                                                    <label for="star3" title="text">3 stars</label>
+                                                    <input type="radio" id="star2" name="rate" value="2" />
+                                                    <label for="star2" title="text">2 stars</label>
+                                                    <input type="radio" id="star1" name="rate" value="1" />
+                                                    <label for="star1" title="text">1 star</label>
+                                                }
+                                                else if (i==4)
+                                                {
+                                                    <input type="radio" id="star5" name="rate" value="5" />
+                                                    <label for="star5" title="text">5 stars</label>
+                                                    <input type="radio" id="star4" name="rate" value="4" checked />
+                                                    <label for="star4" title="text">4 stars</label>
+                                                    <input type="radio" id="star3" name="rate" value="3" />
+                                                    <label for="star3" title="text">3 stars</label>
+                                                    <input type="radio" id="star2" name="rate" value="2" />
+                                                    <label for="star2" title="text">2 stars</label>
+                                                    <input type="radio" id="star1" name="rate" value="1" />
+                                                    <label for="star1" title="text">1 star</label>
+                                                }
+                                                else if (i == 3)
+                                                {
+                                                    <input type="radio" id="star5" name="rate" value="5" />
+                                                    <label for="star5" title="text">5 stars</label>
+                                                    <input type="radio" id="star4" name="rate" value="4" />
+                                                    <label for="star4" title="text">4 stars</label>
+                                                    <input type="radio" id="star3" name="rate" value="3" checked />
+                                                    <label for="star3" title="text">3 stars</label>
+                                                    <input type="radio" id="star2" name="rate" value="2" />
+                                                    <label for="star2" title="text">2 stars</label>
+                                                    <input type="radio" id="star1" name="rate" value="1" />
+                                                    <label for="star1" title="text">1 star</label>
+                                                }
+                                                else if (i == 2)
+                                                {
+                                                    <input type="radio" id="star5" name="rate" value="5" />
+                                                    <label for="star5" title="text">5 stars</label>
+                                                    <input type="radio" id="star4" name="rate" value="4" />
+                                                    <label for="star4" title="text">4 stars</label>
+                                                    <input type="radio" id="star3" name="rate" value="3" />
+                                                    <label for="star3" title="text">3 stars</label>
+                                                    <input type="radio" id="star2" name="rate" value="2" checked />
+                                                    <label for="star2" title="text">2 stars</label>
+                                                    <input type="radio" id="star1" name="rate" value="1" />
+                                                    <label for="star1" title="text">1 star</label>
+                                                }
+                                                else if (i == 1)
+                                                {
+                                                    <input type="radio" id="star5" name="rate" value="5"  />
+                                                    <label for="star5" title="text">5 stars</label>
+                                                    <input type="radio" id="star4" name="rate" value="4" />
+                                                    <label for="star4" title="text">4 stars</label>
+                                                    <input type="radio" id="star3" name="rate" value="3" />
+                                                    <label for="star3" title="text">3 stars</label>
+                                                    <input type="radio" id="star2" name="rate" value="2" />
+                                                    <label for="star2" title="text">2 stars</label>
+                                                    <input type="radio" id="star1" name="rate" value="1" checked />
+                                                    <label for="star1" title="text">1 star</label>
+                                                }
+                                            }
+                                            
+                                        </div>
+                                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" name="RateStar" value="Submit" type="submit">Submit</button>
+                                        <input type="hidden" name="idBlog" value="@ViewBag.idBlog">
+                                    </form>
+                                }
+                                else
+                                {
+                                  <h4>Log in to rate this blog</h4>
+                                } 
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="search-model-box">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-btn">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Searching key.....">
+            </form>
+        </div>
+    </div>
+
+
+    <div id="back-top">
+        <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+    </div>
+    <script src="./Content/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="./Content/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./Content/js/popper.min.js"></script>
+    <script src="./Content/js/bootstrap.min.js"></script>
+
+    <script src="./Content/js/owl.carousel.min.js"></script>
+    <script src="./Content/js/slick.min.js"></script>
+    <script src="./Content/js/jquery.slicknav.min.js"></script>
+
+    <script src="./Content/js/wow.min.js"></script>
+    <script src="./Content/js/animated.headline.js"></script>
+    <script src="./Content/js/jquery.magnific-popup.js"></script>
+    <script src="./Content/js/gijgo.min.js"></script>
+
+    <script src="./Content/js/jquery.nice-select.min.js"></script>
+    <script src="./Content/js/jquery.sticky.js"></script>
+    <script src="./Content/js/jquery.barfiller.js"></script>
+
+    <script src="./Content/js/jquery.counterup.min.js"></script>
+    <script src="./Content/js/waypoints.min.js"></script>
+    <script src="./Content/js/jquery.countdown.min.js"></script>
+    <script src="./Content/js/hover-direction-snake.min.js"></script>
+
+    <script src="./Content/js/contact.js"></script>
+    <script src="./Content/js/jquery.form.js"></script>
+    <script src="./Content/js/jquery.validate.min.js"></script>
+    <script src="./Content/js/mail-script.js"></script>
+    <script src="./Content/js/jquery.ajaxchimp.min.js"></script>
+
+    <script src="./Content/js/plugins.js"></script>
+    <script src="./Content/js/main.js"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-23581568-13');
+    </script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816" integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw==" data-cf-beacon='{"rayId":"7d3da1353c8b91a1","version":"2023.4.0","b":1,"token":"cd0b4b3a733644fc843ef0b185f98241","si":100}' crossorigin="anonymous"></script>
+</body>
+</html>

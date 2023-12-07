@@ -1,0 +1,297 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Fashion | Teamplate</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="Content/img/favicon.ico">
+
+    <link rel="stylesheet" href="Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="Content/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="Content/css/slicknav.css">
+    <link rel="stylesheet" href="Content/css/flaticon.css">
+    <link rel="stylesheet" href="Content/css/progressbar_barfiller.css">
+    <link rel="stylesheet" href="Content/css/gijgo.css">
+    <link rel="stylesheet" href="Content/css/animate.min.css">
+    <link rel="stylesheet" href="Content/css/animated-headline.css">
+    <link rel="stylesheet" href="Content/css/magnific-popup.css">
+    <link rel="stylesheet" href="Content/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="Content/css/themify-icons.css">
+    <link rel="stylesheet" href="Content/css/slick.css">
+    <link rel="stylesheet" href="Content/css/nice-select.css">
+    <link rel="stylesheet" href="Content/css/style.css">
+</head>
+<body class="full-wrapper">
+
+    @Html.Partial("/Views/_header.cshtml")
+
+    <main>
+
+        <section class="blog_area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mb-5 mb-lg-0">
+                        <div class="blog_left_sidebar">
+
+
+                            <nav class="blog-pagination justify-content-center d-flex">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a href="#" class="page-link" aria-label="Previous">
+                                            <i class="ti-angle-left"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">1</a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a href="#" class="page-link">2</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link" aria-label="Next">
+                                            <i class="ti-angle-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="blog_right_sidebar">
+                            <aside class="single_sidebar_widget search_widget">
+                                <form action="#">
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder='Search Keyword' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
+                                            <div class="input-group-append">
+                                                <button class="btns" type="button"><i class="ti-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Search</button>
+                                </form>
+                            </aside>
+                            <aside class="single_sidebar_widget post_category_widget">
+                                <h4 class="widget_title" style="color: #2d2d2d;">Category</h4>
+                                <ul class="list cat-list">
+                                    <li>
+                                        <a href="#" class="d-flex">
+                                            <p>Resaurant food</p>
+                                            <p>(37)</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="d-flex">
+                                            <p>Travel news</p>
+                                            <p>(10)</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="d-flex">
+                                            <p>Modern technology</p>
+                                            <p>(03)</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="d-flex">
+                                            <p>Product</p>
+                                            <p>(11)</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="d-flex">
+                                            <p>Inspiration</p>
+                                            <p>21</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="d-flex">
+                                            <p>Health Care (21)</p>
+                                            <p>09</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </aside>
+                            <aside class="single_sidebar_widget popular_post_widget">
+                                <h3 class="widget_title" style="color: #2d2d2d;">Recent Post</h3>
+                                <div class="media post_item">
+                                    <img src="Content/img/post/post_1.png" alt="post">
+                                    <div class="media-body">
+                                        <a href="blog_details.html">
+                                            <h3 style="color: #2d2d2d;">From life was you fish...</h3>
+                                        </a>
+                                        <p>January 12, 2019</p>
+                                    </div>
+                                </div>
+                                <div class="media post_item">
+                                    <img src="Content/img/post/post_2.png" alt="post">
+                                    <div class="media-body">
+                                        <a href="blog_details.html">
+                                            <h3 style="color: #2d2d2d;">The Amazing Hubble</h3>
+                                        </a>
+                                        <p>02 Hours ago</p>
+                                    </div>
+                                </div>
+                                <div class="media post_item">
+                                    <img src="Content/img/post/post_3.png" alt="post">
+                                    <div class="media-body">
+                                        <a href="blog_details.html">
+                                            <h3 style="color: #2d2d2d;">Astronomy Or Astrology</h3>
+                                        </a>
+                                        <p>03 Hours ago</p>
+                                    </div>
+                                </div>
+                                <div class="media post_item">
+                                    <img src="Content/img/post/post_4.png" alt="post">
+                                    <div class="media-body">
+                                        <a href="blog_details.html">
+                                            <h3 style="color: #2d2d2d;">Asteroids telescope</h3>
+                                        </a>
+                                        <p>01 Hours ago</p>
+                                    </div>
+                                </div>
+                            </aside>
+                            <aside class="single_sidebar_widget tag_cloud_widget">
+                                <h4 class="widget_title" style="color: #2d2d2d;">Tag Clouds</h4>
+                                <ul class="list">
+                                    <li>
+                                        <a href="#">project</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">love</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">technology</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">travel</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">restaurant</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">life style</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">design</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">illustration</a>
+                                    </li>
+                                </ul>
+                            </aside>
+                            <aside class="single_sidebar_widget instagram_feeds">
+                                <h4 class="widget_title" style="color: #2d2d2d;">Instagram Feeds</h4>
+                                <ul class="instagram_row flex-wrap">
+                                    <li>
+                                        <a href="#">
+                                            <img class="img-fluid" src="Content/img/post/post_5.png" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img class="img-fluid" src="Content/img/post/post_6.png" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img class="img-fluid" src="Content/img/post/post_7.png" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img class="img-fluid" src="Content/img/post/post_8.png" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img class="img-fluid" src="Content/img/post/post_9.png" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img class="img-fluid" src="Content/img/post/post_10.png" alt="">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </aside>
+                            <aside class="single_sidebar_widget newsletter_widget">
+                                <h4 class="widget_title" style="color: #2d2d2d;">Newsletter</h4>
+                                <form action="#">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+                                    </div>
+                                    <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Subscribe</button>
+                                </form>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="search-model-box">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-btn">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Searching key.....">
+            </form>
+        </div>
+    </div>
+
+
+    <div id="back-top">
+        <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+    </div>
+
+
+    <script src="./Content/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="./Content/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./Content/js/popper.min.js"></script>
+    <script src="./Content/js/bootstrap.min.js"></script>
+
+    <script src="./Content/js/owl.carousel.min.js"></script>
+    <script src="./Content/js/slick.min.js"></script>
+    <script src="./Content/js/jquery.slicknav.min.js"></script>
+
+    <script src="./Content/js/wow.min.js"></script>
+    <script src="./Content/js/animated.headline.js"></script>
+    <script src="./Content/js/jquery.magnific-popup.js"></script>
+    <script src="./Content/js/gijgo.min.js"></script>
+
+    <script src="./Content/js/jquery.nice-select.min.js"></script>
+    <script src="./Content/js/jquery.sticky.js"></script>
+    <script src="./Content/js/jquery.barfiller.js"></script>
+
+    <script src="./Content/js/jquery.counterup.min.js"></script>
+    <script src="./Content/js/waypoints.min.js"></script>
+    <script src="./Content/js/jquery.countdown.min.js"></script>
+    <script src="./Content/js/hover-direction-snake.min.js"></script>
+
+    <script src="./Content/js/contact.js"></script>
+    <script src="./Content/js/jquery.form.js"></script>
+    <script src="./Content/js/jquery.validate.min.js"></script>
+    <script src="./Content/js/mail-script.js"></script>
+    <script src="./Content/js/jquery.ajaxchimp.min.js"></script>
+
+    <script src="./Content/js/plugins.js"></script>
+    <script src="./Content/js/main.js"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-23581568-13');
+    </script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816" integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw==" data-cf-beacon='{"rayId":"7d3da1353c8b91a1","version":"2023.4.0","b":1,"token":"cd0b4b3a733644fc843ef0b185f98241","si":100}' crossorigin="anonymous"></script>
+</body>
+</html>

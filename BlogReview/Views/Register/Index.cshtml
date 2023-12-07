@@ -1,0 +1,92 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Fashion | Teamplate</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="Content/img/favicon.ico">
+
+    <link rel="stylesheet" href="Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="Content/css/style.css">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css'>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css'>
+
+</head>
+<body class="full-wrapper">
+
+    @Html.Partial("/Views/_header.cshtml")
+    <main>
+        <h1 style="text-align: center;color: purple;margin-top: 100px">REGISTER</h1>
+        <div class="row">
+            <div class="col-6 col-md-4"></div>
+            <div class="col-6 col-md-4">
+                <form asp-controller="Register" asp-action="Index" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Your Name</label>
+                        <input type="text" class="form-control" name="name" placeholder="Enter your name" value="@ViewBag.enterName" required>
+                    </div>
+                    @if (ViewBag.nameErr != null)
+                    {
+                        <span style="color: red">@ViewBag.nameErr</span>
+
+                        <br>
+                    }
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Username</label>
+                        <input type="text" class="form-control" name="username" placeholder="Enter username" value="@ViewBag.enterUser" required>
+                    </div>
+                    @if (ViewBag.userErr != null)
+                    {
+                        <span style="color: red">@ViewBag.userErr</span>
+
+                        <br>
+                    }
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter Password" value="@ViewBag.enterPass" required>
+                    </div>
+                    @if (ViewBag.passErr != null)
+                    {
+                        <span style="color: red">@ViewBag.passErr</span>
+
+                        <br>
+                    }
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">confirm Password</label>
+                        <input type="password" class="form-control" name="passwordCom" placeholder="confirm Password" value="@ViewBag.enterComPass" required>
+                    </div>
+                    @if (ViewBag.passComErr != null)
+                    {
+                        <span style="color: red">@ViewBag.passComErr</span>
+
+                        <br>
+                    }
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Email</label>
+                        <input type="email" class="form-control" name="email" placeholder="Enter email" value="@ViewBag.enterEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Image User</label>
+                        <input type="file" class="form-control" name="image" placeholder="image" required>
+                    </div>
+                    @if (ViewBag.imageErr != null)
+                    {
+                        <span style="color: red">@ViewBag.imageErr</span>
+
+                        <br>
+                    }
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="col-6 col-md-4"></div>
+        </div>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Fashion | Teamplate</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="Content/img/favicon.ico">
+
+    <link rel="stylesheet" href="Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="Content/css/style.css">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css'>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css'>
+
+</head>
+<body class ="full-wrapper">
+
+    @Html.Partial("/Views/_header.cshtml")
+    <main>
+        <h1 style="text-align: center;color: purple;margin-top: 100px">LOGIN</h1>
+        <div class="row">
+            <div class="col-6 col-md-4"></div>
+            <div class="col-6 col-md-4">
+                <form asp-controller="Login" asp-action="Index" method="post">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Username</label>
+                        <input type="text" class="form-control" name="u" placeholder="Enter Username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" name="p" placeholder="Password" required>
+                    </div>
+                    @if (ViewBag.mes != null)
+                    {
+                        <span style="color: red">@ViewBag.mes</span><br>
+                    }
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a href="Register" style="color: black; margin-left:20px">Sign up</a>
+                </form>
+            </div>
+            <div class="col-6 col-md-4"></div>
+        </div>
+
+    </main>
+
+</body>
+</html>
